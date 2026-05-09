@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Canopy&Co — Journal</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/styles.css?v=home-layout">
+</head>
+<body>
+  <div class="page-container">
+    <aside class="sidebar">
+      <div class="sidebar-content">
+        <div class="brand">
+          <a href="index.html" class="brand-title-link">
+            <h1 class="brand-title">Canopy&Co</h1>
+          </a>
+          <p class="brand-description">Canopy&Company from the heart of Malabar.</p>
+        </div>
+
+        <nav class="journal-sidebar" aria-label="Journal navigation">
+          <h2 class="section-label">Journal</h2>
+          <p class="journal-sidebar__lede">You're reading our journal — open any story below for the full piece.</p>
+          <a href="index.html" class="journal-sidebar__cta journal-sidebar__cta--quiet">← Home</a>
+        </nav>
+
+        <div class="socials-section">
+          <h2 class="section-label">Socials</h2>
+          <div class="social-icons">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <rect x="2" y="2" width="20" height="20" rx="5" stroke="currentColor" stroke-width="2"/>
+              <circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="2"/>
+              <circle cx="17.5" cy="6.5" r="1.5" fill="currentColor"/>
+            </svg>
+            <svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <path fill="currentColor" d="M21.58 7.19c-.23-.86-.91-1.54-1.77-1.77C18.25 5 12 5 12 5s-6.25 0-7.81.42c-.86.23-1.54.91-1.77 1.77C2 8.75 2 12 2 12s0 3.25.42 4.81c.23.86.91 1.54 1.77 1.77C5.75 19 12 19 12 19s6.25 0 7.81-.42c.86-.23 1.54-.91 1.77-1.77C22 15.25 22 12 22 12s0-3.25-.42-4.81zM10 15V9l6 3-6 3z"/>
+            </svg>
+          </div>
+        </div>
+
+        <div class="about-section">
+          <a href="#" class="about-link">About</a>
+        </div>
+      </div>
+    </aside>
+
+    <main class="main-content main-content--wide">
+      <div class="article-container">
+        <header class="journal-page-header">
+          <p class="journal-page-eyebrow">Journal</p>
+          <h1 class="journal-page-title">Stories &amp; reflections</h1>
+          <p class="journal-page-lede">Planning, place, and the small details that shape how a day feels.</p>
+        </header>
+
+        <div class="posts-container" id="posts-container"></div>
+      </div>
+    </main>
+  </div>
+
+  <div id="article-modal" class="modal" hidden role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <div class="modal-backdrop" aria-hidden="true"></div>
+    <div class="modal-shell">
+      <button type="button" class="modal-close" aria-label="Close">&times;</button>
+      <div class="modal-scroll">
+        <div id="modal-body"></div>
+      </div>
+    </div>
+  </div>
+
+  <script src="assets/js/blog.js"></script>
+</body>
+</html>
