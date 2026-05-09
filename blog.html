@@ -4,6 +4,13 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Canopy&Co — Journal</title>
+  <!--
+    Journal page (static HTML + vanilla JS).
+    Key dependencies used by assets/js/blog.js:
+    - #posts-container: where the post cards are rendered
+    - #article-modal: modal wrapper toggled open/close
+    - #modal-body: modal content is injected here
+  -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&display=swap" rel="stylesheet">
@@ -54,11 +61,13 @@
           <p class="journal-page-lede">Planning, place, and the small details that shape how a day feels.</p>
         </header>
 
+        <!-- Post cards are injected here by assets/js/blog.js -->
         <div class="posts-container" id="posts-container"></div>
       </div>
     </main>
   </div>
 
+  <!-- Modal shell (hidden by default). assets/js/blog.js toggles [hidden] and injects HTML into #modal-body. -->
   <div id="article-modal" class="modal" hidden role="dialog" aria-modal="true" aria-labelledby="modal-title">
     <div class="modal-backdrop" aria-hidden="true"></div>
     <div class="modal-shell">
@@ -69,6 +78,7 @@
     </div>
   </div>
 
+  <!-- Keep this script path stable; it renders the journal list and controls the modal. -->
   <script src="assets/js/blog.js"></script>
 </body>
 </html>

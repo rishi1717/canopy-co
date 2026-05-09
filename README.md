@@ -1,102 +1,177 @@
-# Canopy&co - Minimalist Blog/Article Website
+# Canopy&Co — Website (static HTML/CSS/JS)
 
-A minimalist, editorial-style website for Canopy&co event management company, designed to match the reference layout with a fixed left sidebar and main article area.
+This is a **simple, no-code-build** website. You edit a few files, refresh the browser, and you’re done.
 
-## Overview
+It has:
+- **Home page** (`index.html`): a featured article layout.
+- **Journal page** (`blog.html`): a list of posts that open in a popup (modal).
 
-This implementation focuses on creating a clean, spacious blog/article page layout as specified in the reference design:
+No frameworks, no database, no server required.
 
-- Fixed left sidebar (380px width) with brand info, recent activity, socials, and about sections
-- Main content area on the right for article display
-- Ample whitespace and minimalist aesthetic
-- Dark charcoal text on white background
-- Responsive design that stacks sidebar above content on mobile/tablet
-
-## Files
+## Folder map (what each file does)
 
 ```
-event-management-site/
-├── index.html              # Main article page (Hello from us at Canopy&Co!)
-├── blog.html               # Blog listing page (Journal)
+canopy&co/
+├── index.html                 # Home page (featured article)
+├── blog.html                  # Journal list + modal popup shell
 ├── assets/
 │   ├── css/
-│   │   └── styles.css      # Minimalist styles matching reference design
+│   │   └── styles.css         # All styling (colors, spacing, layout, modal)
 │   └── js/
-│       └── blog.js         # Blog functionality and subtle interactions
-├── .nojekyll               # Required for GitHub Pages
+│       └── blog.js            # Post data + journal rendering + modal logic
+├── assets/images/             # Put images here (covers, home hero, etc.)
+├── .nojekyll                  # Helps GitHub Pages serve files as-is
 └── README.md
 ```
 
-## Design Specifications Met
+## Prerequisites (what you need installed)
 
-### Layout
-- ✅ Two-column layout on desktop (sidebar: 380px, main content: fluid)
-- ✅ Thin vertical divider between sidebar and main content
-- ✅ White page background
-- ✅ Clean sans-serif font stack (system UI fonts)
-- ✅ Dark charcoal text (#1a1a1a) for primary content
-- ✅ Ample whitespace throughout
+- **A GitHub account** (for hosting + publishing).
+- **Any code editor** (Cursor / VS Code recommended).
+- **Optional** (recommended for local testing): **Python 3** (already installed on many Macs).
 
-### Left Sidebar
-- ✅ Positioned with 70px left padding and 80px top padding (via spacing variables)
-- ✅ Brand title: "Canopy&co" (30px, 800 weight, dark charcoal)
-- ✅ Brand description: "Canopy&Company from the heart of Malabar." (16px, muted gray)
-- ✅ Recent activity section (180px below brand area)
-- ✅ Activity link: "Hello from us at Canopy&Co!" (15px, dark gray, underlined)
-- ✅ Socials section with Instagram and YouTube icons (24px, 30px gap)
-- ✅ About section label
+## Run locally (recommended way)
 
-### Main Content
-- ✅ Top padding: 85px (40px via spacing-xl)
-- ✅ Left padding: 75px-90px (40px via spacing-lg)
-- ✅ Content max width: 850px
-- ✅ Article title: "Hello from us at Canopy&Co!" (42px, 800 weight, dark charcoal)
-- ✅ Date: "May 4, 2026" (16px, muted gray)
-- ✅ Intro paragraph: "Well, the idea of a complete wedding is never complete. Is it?" (17px, dark gray)
-- ✅ Hero image placeholder (100% width, 500px height, grayscale ready)
+Websites work best when served by a small local server (so scripts load correctly).
 
-### Responsive Behavior
-- ✅ Desktop: sidebar left, article right
-- ✅ Mobile/Tablet: sidebar stacks above article
-- ✅ Reduced padding to 24px on small screens
-- ✅ Title size reduces to 32px on tablet, 28px on mobile
-- ✅ Image height reduces to 360px on tablet, 320px on mobile
+1. Open Terminal in this folder.
+2. Run:
 
-## What Was Removed (Per Request)
+```bash
+python3 -m http.server 8000
+```
 
-❌ No hero landing section with "Creating Extraordinary Events"
-❌ No "Read Our Insights" button
-❌ No services cards section
-❌ No Corporate Events / Weddings / Social Gatherings cards
-❌ No "Ready to Create Something Amazing?" section
-❌ No "Get Started" button
-❌ No centered top horizontal navigation
-❌ No extra sections beyond what was specified
+3. Open `http://localhost:8000` in your browser.
+4. Visit:
+   - Home: `http://localhost:8000/index.html`
+   - Journal: `http://localhost:8000/blog.html`
 
-## Technologies Used
+If you want a “click a button” option, install the VS Code extension **Live Server** and use “Go Live”.
 
-- HTML5 (semantic markup)
-- CSS3 (Flexbox, CSS Variables, Media Queries)
-- Vanilla JavaScript (no frameworks or dependencies)
-- Responsive design principles
+## The only safe edits you usually need
 
-## Usage
+### Change home page text / image
 
-1. Open `index.html` to view the main article page
-2. Open `blog.html` to view the blog listing page
-3. For local development, serve with a local web server:
-   ```bash
-   python3 -m http.server 8000
-   ```
-4. Visit `http://localhost:8000` in your browser
+Edit:
+- `index.html`
 
-## Deployment
+Common edits:
+- Change the title/date/intro text.
+- Change the `<img src="assets/images/...">` to your image file.
 
-This site is ready for deployment to GitHub Pages or any static hosting service. The `.nojekyll` file ensures GitHub Pages doesn't process the site with Jekyll.
+### Add / edit journal posts
 
-## Customization
+Edit:
+- `assets/js/blog.js`
 
-- Update content in `index.html` for the main article
-- Modify blog posts data in `assets/js/blog.js` for the blog page
-- Adjust styles in `assets/css/styles.css` (uses CSS variables for easy theming)
-- Replace the `.article-image` placeholder with an actual image URL
+Look for:
+- `const blogPosts = [...]`
+
+To add a post:
+- Copy an existing post object, paste it at the top (to show first), and change:
+  - `id` (must be unique number)
+  - `title`, `excerpt`, `date`, `author`, `readTime`
+  - `coverSrc` / `coverAlt`
+  - `content` (paragraphs + images)
+
+Images:
+- Put image files in `assets/images/`
+- Use paths like `assets/images/your-file.png`
+
+### Change colors, fonts, spacing (site “theme knobs”)
+
+Edit:
+- `assets/css/styles.css`
+
+Best place to start:
+- The `:root { ... }` section at the top (it controls colors, spacing, widths, font).
+
+## Deploy option A: GitHub Pages (recommended, simplest)
+
+### 1) Put the site on GitHub (first time)
+
+If this repo is already on GitHub, skip to “Enable Pages”.
+
+If not:
+- Create a new GitHub repo
+- Upload these files (or use “Add file → Upload files”)
+
+### 2) Enable GitHub Pages
+
+In GitHub:
+- Open the repository
+- Go to **Settings → Pages**
+- Under **Build and deployment**:
+  - **Source**: “Deploy from a branch”
+  - **Branch**: `main` (or `master`) and **folder** `/ (root)`
+- Save
+
+After a minute, GitHub will show a public URL like:
+- `https://<username>.github.io/<repo>/`
+
+### 3) Keep images working
+
+Because the site uses relative paths like `assets/images/...`, it will work on GitHub Pages as long as files are committed in the repo under that path.
+
+## Deploy option B: Netlify (also very easy)
+
+### Option B1: Drag-and-drop deploy (fastest)
+
+- Go to Netlify
+- Create a new site
+- Drag the entire folder (or a zip) into the deploy area
+
+### Option B2: Connect to GitHub (best long-term)
+
+- Netlify → “Add new site” → “Import from Git”
+- Choose GitHub + this repo
+- Build settings:
+  - **Build command**: (leave empty)
+  - **Publish directory**: `/` (root)
+- Deploy
+
+## Repo handoff (transfer ownership on GitHub)
+
+This is the cleanest handover (he becomes the owner).
+
+### What you do (current owner)
+
+In GitHub:
+- Repo → **Settings** → **General** → **Danger Zone**
+- Click **Transfer ownership**
+- Enter:
+  - the new owner’s GitHub username
+  - the repo name (to confirm)
+- Confirm transfer
+
+### What he must do (new owner)
+
+- He must **accept** the transfer request (GitHub will email/notify him).
+- After accepting, the repo moves under his account and he becomes the owner.
+
+## Troubleshooting (common issues)
+
+- **Images don’t show**:
+  - Make sure the file exists at `assets/images/...`
+  - Make sure the filename matches exactly (including `.png` vs `.jpg`, and capitalization).
+- **Journal list is blank**:
+  - Ensure `blog.html` includes `<script src="assets/js/blog.js"></script>`
+  - Ensure there is a `<div id="posts-container"></div>` (the JS needs that exact ID)
+- **Popup (modal) won’t open**:
+  - Open browser DevTools console and look for errors.
+
+## “Ask AI like this” (copy/paste prompts)
+
+Use prompts that mention the exact file(s).
+
+- **Add a new journal post**:
+  - “In `assets/js/blog.js`, add a new item to `blogPosts` with id=7. Use the same structure as the other posts. Add 2 paragraphs and 1 image. Keep escaping safe.”
+
+- **Change home page image**:
+  - “In `index.html`, change the home image to `assets/images/new-hero.jpg`. Also update the alt text. Keep the layout the same.”
+
+- **Change site colors**:
+  - “In `assets/css/styles.css`, update the `:root` color variables to a warmer palette. Don’t change class names or layout rules.”
+
+- **Make the journal cards show newest first**:
+  - “In `assets/js/blog.js`, ensure `renderPostCards` renders posts in newest-first order. If posts are in an array, keep the array order as the source of truth.”

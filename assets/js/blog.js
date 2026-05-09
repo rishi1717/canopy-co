@@ -1,4 +1,15 @@
-// Journal: post data, cards, and article modal
+/**
+ * Journal page logic (blog.html)
+ *
+ * What this file does:
+ * - Stores the post content in `blogPosts` (this is the “database”)
+ * - Renders clickable post cards into: <div id="posts-container">
+ * - Opens/closes a modal: <div id="article-modal"> and injects HTML into <div id="modal-body">
+ *
+ * Safe edits:
+ * - Add/edit posts in `blogPosts` only (recommended for non-coders)
+ * - Avoid changing element IDs in blog.html (`posts-container`, `article-modal`, `modal-body`)
+ */
 
 function escapeHtml(text) {
   const el = document.createElement('div');
@@ -7,6 +18,7 @@ function escapeHtml(text) {
 }
 
 function escapeAttr(text) {
+  // Used for attributes like aria-label. (Different escaping rules than HTML text nodes.)
   return String(text)
     .replace(/&/g, '&amp;')
     .replace(/"/g, '&quot;')
@@ -17,7 +29,25 @@ function escapeAttr(text) {
  * @typedef {{ type: 'paragraph', text: string } | { type: 'image', src: string, alt: string }} ContentBlock
  */
 
-/** @type {Array<{ id: number, title: string, excerpt: string, date: string, author: string, readTime: string, coverSrc?: string, coverAlt?: string, content: ContentBlock[] }>} */
+/**
+ * Blog post model (keep this shape when adding new posts).
+ * Notes:
+ * - `id` must be unique (number). It’s how clicks find the right post.
+ * - `coverSrc` should be a relative path (example: "assets/images/my-cover.jpg")
+ * - `content` is an ordered list of blocks (paragraphs and images).
+ *
+ * @type {Array<{
+ *   id: number,
+ *   title: string,
+ *   excerpt: string,
+ *   date: string,
+ *   author: string,
+ *   readTime: string,
+ *   coverSrc?: string,
+ *   coverAlt?: string,
+ *   content: ContentBlock[]
+ * }>}
+ */
 const blogPosts = [
   {
     id: 1,
@@ -166,6 +196,8 @@ const blogPosts = [
 ];
 
 function renderContentBlocks(blocks) {
+  // Convert post content blocks into HTML for the modal.
+  // IMPORTANT: we escape user-provided strings to prevent injecting raw HTML.
   return blocks
     .map((block) => {
       if (block.type === 'paragraph') {
@@ -180,10 +212,12 @@ function renderContentBlocks(blocks) {
 }
 
 function findPostById(id) {
+  // IDs come from `data-post-id` on each rendered card.
   return blogPosts.find((p) => p.id === id);
 }
 
 function openModal(post) {
+  // Shows the modal and injects the selected post’s HTML into #modal-body.
   const modal = document.getElementById('article-modal');
   const bodyEl = document.getElementById('modal-body');
   if (!modal || !bodyEl) return;
@@ -213,6 +247,7 @@ function openModal(post) {
 }
 
 function closeModal() {
+  // Hides the modal. (We keep the HTML in #modal-body; it gets overwritten on next open.)
   const modal = document.getElementById('article-modal');
   if (!modal) return;
   modal.hidden = true;
@@ -221,6 +256,7 @@ function closeModal() {
 }
 
 function renderPostCards(container) {
+  // Render every post as a clickable card. Clicking a card opens the modal for that post.
   container.innerHTML = blogPosts
     .map((post) => {
       let thumb;
@@ -247,6 +283,7 @@ function renderPostCards(container) {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
+  // Entrypoint: wire up rendering + events once the page HTML exists.
   const postsContainer = document.getElementById('posts-container');
   const modal = document.getElementById('article-modal');
 
@@ -254,6 +291,7 @@ document.addEventListener('DOMContentLoaded', () => {
     renderPostCards(postsContainer);
 
     postsContainer.addEventListener('click', (e) => {
+      // Event delegation: handles clicks for any card inside the container.
       const card = e.target.closest('.blog-post-card');
       if (!card) return;
       const id = parseInt(card.dataset.postId, 10);
@@ -262,6 +300,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     postsContainer.addEventListener('keydown', (e) => {
+      // Accessibility: allow opening a card with Enter/Space when focused.
       if (e.key !== 'Enter' && e.key !== ' ') return;
       const card = e.target.closest('.blog-post-card');
       if (!card) return;
@@ -274,6 +313,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   if (modal) {
     modal.addEventListener('click', (e) => {
+      // Clicking the dark backdrop closes the modal.
       if (e.target.classList.contains('modal-backdrop')) closeModal();
     });
 
@@ -281,6 +321,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (closeBtn) closeBtn.addEventListener('click', closeModal);
 
     document.addEventListener('keydown', (e) => {
+      // Global escape key closes the modal when open.
       if (e.key === 'Escape' && !modal.hidden) {
         closeModal();
       }

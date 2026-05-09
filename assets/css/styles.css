@@ -1,6 +1,22 @@
-/* Canopy&Co — minimal editorial layout */
+/*
+  Canopy&Co — minimal editorial layout
+
+  This file styles BOTH pages:
+  - index.html (home): sidebar + featured article
+  - blog.html (journal): sidebar + post cards + modal popup
+
+  Safest place to customize the look (without breaking layout):
+  - The CSS variables in :root below (“theme knobs”).
+
+  Quick selector map (useful for AI edits):
+  - Layout shell: .page-container, .sidebar, .main-content
+  - Home article: .blog-article, .article-title, .article-image
+  - Journal cards: .posts-container, .blog-post-card, .blog-post-card__thumb, .blog-post-card__body
+  - Modal: .modal, .modal-backdrop, .modal-shell, .modal-scroll
+*/
 
 :root {
+  /* Theme knobs: colors */
   --color-bg: #f7f7f6;
   --color-bg-elevated: #ffffff;
   --color-bg-sidebar: #fafafa;
@@ -10,18 +26,26 @@
   --color-border: #e8e8e6;
   --color-border-hover: #cfcfcd;
   --color-accent: #111111;
+
+  /* Theme knobs: typography */
   --font-sans: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
   --font-display: 'DM Sans', var(--font-sans);
+
+  /* Theme knobs: shape + elevation */
   --radius-sm: 8px;
   --radius-md: 12px;
   --shadow-modal: 0 28px 80px rgba(0, 0, 0, 0.14);
   --shadow-card: 0 1px 0 rgba(0, 0, 0, 0.04);
+
+  /* Theme knobs: spacing scale */
   --spacing-xs: 8px;
   --spacing-sm: 16px;
   --spacing-md: 24px;
   --spacing-lg: 32px;
   --spacing-xl: 48px;
   --spacing-2xl: 64px;
+
+  /* Layout knobs */
   --sidebar-width: min(272px, 88vw);
   --main-max: 720px;
   --main-wide-max: 960px;
